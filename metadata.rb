@@ -3,7 +3,7 @@ name 'flash'
 maintainer 'Dennis Hoer'
 maintainer_email 'dennis.hoer@gmail.com'
 license 'MIT'
-description 'Installs Adobe Flash Player'
+description 'Installs/Configures Adobe Flash Player'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '1.2.2'
 
