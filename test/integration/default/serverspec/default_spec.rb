@@ -10,11 +10,13 @@ end
 
 case os[:family]
 when 'windows'
-  describe command('p4.exe') do
-    its(:stderr) { should match(/flash client/) }
+  describe file('C:\Windows\SysWOW64\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg') do
+    its(:content) { should match /# trust home directory/ }
+    its(:content) { should match /C:\\Users\\vagrant/ }
   end
-else # linux
-  describe command('p4') do
-    its(:stderr) { should match(/flash client/) }
+
+  describe file('C:\Windows\SysWOW64\Macromed\Flash\mms.cfg') do
+    its(:content) { should match /AutoUpdateDisable=0/ }
+    its(:content) { should match /SilentAutoUpdateEnable=1/ }
   end
 end

@@ -1,5 +1,5 @@
 major_version = node['flash']['version'].split('.')[0]
-system = node['kernel']['machine'] == 'x86_64' ? 'SysWow64' : 'System32'
+system = node['kernel']['machine'] == 'x86_64' ? 'SysWOW64' : 'System32'
 
 if platform?('windows')
   windows_package "Adobe Flash Player #{major_version} ActiveX" do
@@ -26,27 +26,35 @@ if platform?('windows')
   end
 
   # The Global FlashPlayerTrust directory
-  trust_dir = "%WINDIR%\\#{system}\\Macromed\\FlashPlayerTrust"
+  trust_dir = "#{ENV['WINDIR']}\\#{system}\\Macromed\\FlashPlayerTrust"
 
-  directory trust_dir
+  directory trust_dir do
+    only_if { Dir.exist?("#{ENV['WINDIR']}\\#{system}\\Macromed") }
+  end
 
   file "#{trust_dir}\\ChefGeneratedTrust.cfg" do
-    content node['flash']['trust'].join('\r\n')
-    mode '0755'
+    content node['flash']['trust'].join("\r\n")
+    only_if { Dir.exist?("#{ENV['WINDIR']}\\#{system}\\Macromed") }
   end
 
   # Privacy and security settings (mms.cfg)
-  mms_cfg_path = "%WINDIR%\\#{system}\\Macromed\\Flash\\mms.cfg"
+  mms_cfg_path = "#{ENV['WINDIR']}\\#{system}\\Macromed\\Flash\\mms.cfg"
+
+  file mms_cfg_path do
+    action :create_if_missing
+    only_if { Dir.exist?("#{ENV['WINDIR']}\\#{system}\\Macromed\\Flash") }
+  end
 
   ruby_block "Manage #{mms_cfg_path}" do
     block do
       file = Chef::Util::FileEdit.new(mms_cfg_path)
       node['flash']['mms_cfg'].each do |k, v|
-        file.search_file_replace_line(/#{k}/, "#{k} = #{v}")
-        file.insert_line_if_no_match(/#{k}/, "#{k} = #{v}")
+        file.search_file_replace_line(/#{k}/, "#{k}=#{v}")
+        file.insert_line_if_no_match(/#{k}/, "#{k}=#{v}")
       end
       file.write_file
     end
+    only_if { Dir.exist?("#{ENV['WINDIR']}\\#{system}\\Macromed\\Flash") }
   end
 else
   Chef::Log.warn("Platform #{node['platform']} not supported!")

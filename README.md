@@ -33,12 +33,12 @@ By including this cookbook in a recipe or a run list, you are excepting
 * `node['flash']['install_ppapi']` - Install Flash Player for Chrome and Opera. Default `true`.
 * `node['flash]['trust']` - Specify an array of files or directories that should be trusted for all 
 users, and be placed in a local-trusted sandbox. The Global FlashPlayerTrust file is created as
-%WINDIR%\System32\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg or
-%WINDIR%\SysWow64\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg for 32-bit or 64-bit Windows respectively. 
+C:Windows\System32\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg or
+C:Windows\SysWow64\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg for 32-bit or 64-bit Windows respectively. 
 Default `[]`.
 * `node['flash]['mms_cfg']` - Specify a hash of key value pairs to manage privacy and security settings in mms.cfg. 
-The mms.cfg file managed is under %WINDIR%\System32\Macromed\Flash or
-%WINDIR%\SysWow64\Macromed\Flash for 32-bit or 64-bit Windows respectively. Default `{}`.
+The mms.cfg file managed is under C:Windows\System32\Macromed\Flash or
+C:Windows\SysWow64\Macromed\Flash for 32-bit or 64-bit Windows respectively. Default `{}`.
 
 ## Getting Help
 

@@ -14,4 +14,12 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[flash::default]
+      - recipe[flash_test]
+    attributes:
+      flash:
+        trust:
+          - '# trust home directory'
+          - C:\Users\vagrant
+        mms_cfg:
+          AutoUpdateDisable: 0
+          SilentAutoUpdateEnable: 0
