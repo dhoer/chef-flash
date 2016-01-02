@@ -22,4 +22,4 @@ suites:
           - C:\Users\vagrant
         mms_cfg:
           AutoUpdateDisable: 0
-          SilentAutoUpdateEnable: 0
+          SilentAutoUpdateEnable: 1
