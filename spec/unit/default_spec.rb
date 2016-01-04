@@ -7,14 +7,18 @@ describe 'flash::default' do
     before do
       ENV['WINDIR'] = 'C:\Windows'
       allow(Dir).to receive(:exist?).and_return(true)
-      allow(FlashHelper).to receive(:flash_preinstalled_on_ie?).and_return(true)
-      allow(FlashHelper).to receive(:flash_preinstall_enabled_by_default?).and_return(true)
+      allow(Flash::IE).to receive(:flash_preinstalled?).and_return(true)
+      allow(Flash::IE).to receive(:flash_enabled_by_default?).and_return(false)
     end
 
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(::WINDOWS_OPTS) do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2', log_level: ::LOG_LEVEL) do |node|
         node.set['flash']['trust'] = ['# comment', 'C:\trust\directory']
       end.converge(described_recipe)
+    end
+
+    it 'enables pre-install on Windows Server for Internet Explorer' do
+      expect(chef_run).to run_powershell_script('Flash is pre-installed but not enabled on Windows Server 2012')
     end
 
     it 'installs for Internet Explorer - ActiveX' do

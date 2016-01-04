@@ -8,7 +8,7 @@ if platform?('windows')
       "install_flash_player_#{major_version}_active_x.msi"
     options '/qn'
     installer_type :custom
-    only_if { node['flash']['ie'] && !FlashHelper.flash_preinstalled_on_ie? }
+    only_if { node['flash']['ie'] && !Flash::IE.flash_preinstalled? }
   end
 
   powershell_script 'Flash is pre-installed but not enabled on Windows Server 2012' do
@@ -16,7 +16,7 @@ if platform?('windows')
       import-module ServerManager
       Add-WindowsFeature -name Desktop-Experience,qWave -IncludeAllSubFeature -IncludeManagementTools
     EOH
-    only_if { node['flash']['ie'] && !FlashHelper.flash_preinstall_enabled_by_default? }
+    only_if { node['flash']['ie'] && !Flash::IE.flash_enabled_by_default? }
   end
 
   windows_package "Adobe Flash Player #{major_version} NPAPI" do
