@@ -7,17 +7,18 @@ describe 'flash::default' do
     before do
       ENV['WINDIR'] = 'C:\Windows'
       allow(Dir).to receive(:exist?).and_return(true)
-      allow_any_instance_of(Dir).to receive(:exist?).and_return(true)
+      allow(FlashHelper).to receive(:flash_preinstalled_on_ie?).and_return(true)
+      allow(FlashHelper).to receive(:flash_preinstall_enabled_by_default?).and_return(true)
     end
 
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(::WINDOWS_OPTS) do |node|
+      ChefSpec::SoloRunner.new(::WINDOWS_OPTS) do |node|
         node.set['flash']['trust'] = ['# comment', 'C:\trust\directory']
       end.converge(described_recipe)
     end
 
     it 'installs for Internet Explorer - ActiveX' do
-      expect(chef_run).to install_windows_package('Adobe Flash Player 20 ActiveX')
+      expect(chef_run).to_not install_windows_package('Adobe Flash Player 20 ActiveX')
     end
 
     it 'installs for Firefox - NPAPI' do

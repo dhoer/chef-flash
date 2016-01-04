@@ -8,6 +8,5 @@ version '0.1.0'
 
 depends 'flash'
 
-depends 'mozilla_firefox', '~> 1.0'
-depends 'chrome', '~> 1.0'
-depends 'opera', '~> 1.0'
+depends 'java_se', '~> 8.0'
+depends 'selenium_grid', '~> 1.0'

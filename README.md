@@ -6,7 +6,10 @@
 [supermarket]: https://supermarket.chef.io/cookbooks/flash
 [travis]: https://travis-ci.org/dhoer/chef-flash
 
-Installs Adobe Flash Player for Internet Explorer - ActiveX, Firefox - NPAPI, and Chrome and Opera - PPAPI.
+Installs/Configures Adobe Flash Player for Internet Explorer, Firefox, and Chrome and Opera.
+
+Flash Player for Internet Explorer is pre-installed on Windows 8+.  Flash Player for Internet Explorer is 
+pre-installed but not enabled for Windows Server 2012+, so this cookbook will enable it.
 
 Please submit a Pull Request if you would like to add support for Linux, Mac OS X, ESR, Debug or Projector.
 
@@ -28,17 +31,18 @@ By including this cookbook in a recipe or a run list, you are excepting
 [Adobe end-user license agreement (EULA)](http://www.adobe.com/products/eula/tools/flashplayer_usage.html).
 
 ### Attributes
-* `node['flash']['install_activex']` - Install Flash Player for Internet Explorer.  Default `true`.
-* `node['flash']['install_npapi']` - Install Flash Player for Firefox. Default `true`.
-* `node['flash']['install_ppapi']` - Install Flash Player for Chrome and Opera. Default `true`.
+* `node['flash']['ie']` - Install Flash Player ActiveX on Windows 7/Vista/XP or enable Flash on Windows Server 2012 
+for Internet Explorer.  Default `true`.
+* `node['flash']['npapi']` - Install Flash Player NPAPI for Firefox. Default `true`.
+* `node['flash']['ppapi']` - Install Flash Player PPAPI for Chrome and Opera. Default `true`.
 * `node['flash]['trust']` - Specify an array of files or directories that should be trusted for all 
 users, and be placed in a local-trusted sandbox. The Global FlashPlayerTrust file is created as
 C:Windows\System32\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg or
-C:Windows\SysWow64\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg for 32-bit or 64-bit Windows respectively. 
+C:Windows\SysWOW64\Macromed\FlashPlayerTrust\ChefGeneratedTrust.cfg for 32-bit or 64-bit Windows respectively. 
 Default `[]`.
 * `node['flash]['mms_cfg']` - Specify a hash of key value pairs to manage privacy and security settings in mms.cfg. 
 The mms.cfg file managed is under C:Windows\System32\Macromed\Flash or
-C:Windows\SysWow64\Macromed\Flash for 32-bit or 64-bit Windows respectively. Default `{}`.
+C:Windows\SysWOW64\Macromed\Flash for 32-bit or 64-bit Windows respectively. Default `{}`.
 
 ## Getting Help
 
