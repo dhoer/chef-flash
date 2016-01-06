@@ -19,7 +19,7 @@ module Flash
 
       private
 
-      # Catenate Windows major and minor version e.g., 6.2.6099 -> 62
+      # Catenate Windows major and minor version e.g., 6.2.9200 -> 62
       def catentate_windows_version(node)
         ver_array = node['platform_version'].split('.')
         "#{ver_array[0]}#{ver_array[1]}".to_i
